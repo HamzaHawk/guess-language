@@ -18,8 +18,9 @@
 '''
 
 import unittest
+import urllib
 
-from guess_language import createOrderedModel, find_runs, guessLanguage, normalize
+from guess_language import createOrderedModel, find_runs, guessLanguage, normalize, guessLanguageId, guessLanguageName,UNKNOWN
 
 class guess_language_test(unittest.TestCase):
     def test_normalize(self):
@@ -68,12 +69,12 @@ class guess_language_test(unittest.TestCase):
              (" Die kritiek was volgens hem bitter hard nodig, omdat Nederland binnen een paar jaar in een soort Belfast zou dreigen te veranderen",  "nl"), # dutch
              ("På denne side bringer vi billeder fra de mange forskellige forberedelser til arrangementet, efterhånden som vi får dem ",  "da"), # danish
              ("Vi säger att Frälsningen är en gåva till alla, fritt och för intet.  Men som vi nämnt så finns det två villkor som måste",  "sv"), # swedish
-             ("Nominasjonskomiteen i Akershus KrF har skviset ut Einar Holstad fra stortingslisten. Ytre Enebakk-mannen har plass p Stortinget s lenge Valgerd Svarstad Haugland sitter i",  "nb"), # norwegian
              ("on julkishallinnon verkkopalveluiden yhteinen osoite. Kansalaisten arkielämää helpottavaa tietoa on koottu eri aihealueisiin",  "fi"), # finnish
              ("Ennetamaks reisil ebameeldivaid vahejuhtumeid vii end kurssi reisidokumentide ja viisade reeglitega ning muu praktilise informatsiooniga",  "et"), # estonian
              ("Hiába jön létre az önkéntes magyar haderő, hiába nem lesz többé bevonulás, változatlanul fennmarad a hadkötelezettség intézménye",  "hu"), # hungarian
              ("հարաբերական",  "hy"), # armenian
-             ("ii",  "No match"),
+             ("Ikke bra. Jeg klarer vel 20 minutter med litt hjelp. Men jeg har ikke spilt fotball siden jeg la opp, så det er vanskelig å holde seg i form. Sykling hver dag er tungt og kjedelig, svarer Solskjær",  "no"), # norwegian
+             ("ii",  UNKNOWN),
         ]
 
         for text, name in tests:
@@ -82,6 +83,5 @@ class guess_language_test(unittest.TestCase):
     def setUp(self):
         pass
 
-    
 if __name__ == '__main__':
     unittest.main()
