@@ -75,6 +75,7 @@ class guess_language_test(unittest.TestCase):
              ("Ennetamaks reisil ebameeldivaid vahejuhtumeid vii end kurssi reisidokumentide ja viisade reeglitega ning muu praktilise informatsiooniga",  "et"), # estonian
              ("Hiába jön létre az önkéntes magyar haderő, hiába nem lesz többé bevonulás, változatlanul fennmarad a hadkötelezettség intézménye",  "hu"), # hungarian
              ("հարաբերական",  "hy"), # armenian
+             ("Hai vấn đề khó chịu với màn hình thường gặp nhất khi bạn dùng laptop là vết trầy xước và điểm chết. Sau đây là vài cách xử lý chú", "vi"),
              ("ii",  UNKNOWN),
         ]
 

@@ -348,13 +348,16 @@ def find_runs(text):
 #    pprint.pprint(run_types)
     
     # return run types that used for 40% or more of the string
-    # always return basic latin if found more than 15%.
+    # always return basic latin if found more than 15%
+    # and extended additional latin if over 10% (for Vietnamese)
     relevant_runs = []
     for key, value in run_types.items():
         pct = (value*100) / totalCount
         if pct >=40:
             relevant_runs.append(key)
         elif key == "Basic Latin" and ( pct >=15 ):
+            relevant_runs.append(key)
+        elif key == "Latin Extended Additional" and ( pct >=10 ):
             relevant_runs.append(key)
 
     return relevant_runs
