@@ -19,7 +19,9 @@
 
 import unittest
 
-from guess_language import createOrderedModel, find_runs, guessLanguage, normalize
+from guess_language import (createOrderedModel, find_runs, 
+    guessLanguage, guessLanguageName, guessLanguageTag, guessLanguageId, guessLanguageInfo,
+    normalize, UNKNOWN)
 
 class guess_language_test(unittest.TestCase):
     def test_normalize(self):
@@ -73,12 +75,19 @@ class guess_language_test(unittest.TestCase):
              ("Ennetamaks reisil ebameeldivaid vahejuhtumeid vii end kurssi reisidokumentide ja viisade reeglitega ning muu praktilise informatsiooniga",  "et"), # estonian
              ("Hiába jön létre az önkéntes magyar haderő, hiába nem lesz többé bevonulás, változatlanul fennmarad a hadkötelezettség intézménye",  "hu"), # hungarian
              ("հարաբերական",  "hy"), # armenian
-             ("ii",  "No match"),
+             ("ii",  UNKNOWN),
         ]
 
         for text, name in tests:
             self.assertEquals(name, guessLanguage(text))
 
+        text = "Verifions que le détecteur de langues marche"
+        self.assertEquals('fr', guessLanguageTag(text))
+        self.assertEquals('French', guessLanguageName(text))
+        self.assertEquals(26150, guessLanguageId(text))
+        self.assertEquals(('fr', 26150, 'French'), guessLanguageInfo(text))
+        
+        
     def setUp(self):
         pass
 

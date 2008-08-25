@@ -32,7 +32,6 @@
 
 import codecs, os, re, sys, unicodedata
 from collections import defaultdict
-from pprint import pprint
 from blocks import unicodeBlock
 
 
@@ -70,9 +69,194 @@ SINGLETONS = [
 
 PT = "pt_BR pt_PT".split()
 
-UNKNOWN = 'No match'
+UNKNOWN = 'UNKNOWN'
 
 models = {}
+
+NAME_MAP = {
+    "ab" : "Abkhazian",
+    "af" : "Afrikaans",
+    "ar" : "Arabic",
+    "az" : "Azeri",
+    "be" : "Byelorussian",
+    "bg" : "Bulgarian",
+    "bn" : "Bengali",
+    "bo" : "Tibetan",
+    "br" : "Breton",
+    "ca" : "Catalan",
+    "ceb" : "Cebuano",
+    "cs" : "Czech",
+    "cy" : "Welsh",
+    "da" : "Danish",
+    "de" : "German",
+    "el" : "Greek",
+    "en" : "English",
+    "eo" : "Esperanto",
+    "es" : "Spanish",
+    "et" : "Estonian",
+    "eu" : "Basque",
+    "fa" : "Farsi",
+    "fi" : "Finnish",
+    "fo" : "Faroese",
+    "fr" : "French",
+    "fy" : "Frisian",
+    "gd" : "Scots Gaelic",
+    "gl" : "Galician",
+    "gu" : "Gujarati",
+    "ha" : "Hausa",
+    "haw" : "Hawaiian",
+    "he" : "Hebrew",
+    "hi" : "Hindi",
+    "hr" : "Croatian",
+    "hu" : "Hungarian",
+    "hy" : "Armenian",
+    "id" : "Indonesian",
+    "is" : "Icelandic",
+    "it" : "Italian",
+    "ja" : "Japanese",
+    "ka" : "Georgian",
+    "kk" : "Kazakh",
+    "km" : "Cambodian",
+    "ko" : "Korean",
+    "ku" : "Kurdish",
+    "ky" : "Kyrgyz",
+    "la" : "Latin",
+    "lt" : "Lithuanian",
+    "lv" : "Latvian",
+    "mg" : "Malagasy",
+    "mk" : "Macedonian",
+    "ml" : "Malayalam",
+    "mn" : "Mongolian",
+    "mr" : "Marathi",
+    "ms" : "Malay",
+    "ne" : "Nepali",
+    "nl" : "Dutch",
+    "nn" : "Nynorsk",
+    "no" : "Norwegian",
+    "pa" : "Punjabi",
+    "pl" : "Polish",
+    "ps" : "Pashto",
+    "pt" : "Portuguese",
+    "ro" : "Romanian",
+    "ru" : "Russian",
+    "sa" : "Sanskrit",
+    "sh" : "Serbo-Croatian",
+    "sk" : "Slovak",
+    "sl" : "Slovene",
+    "so" : "Somali",
+    "sq" : "Albanian",
+    "sr" : "Serbian",
+    "sv" : "Swedish",
+    "sw" : "Swahili",
+    "ta" : "Tamil",
+    "te" : "Telugu",
+    "th" : "Thai",
+    "tl" : "Tagalog",
+    "tlh" : "Klingon",
+    "tn" : "Setswana",
+    "tr" : "Turkish",
+    "tw" : "Twi",
+    "uk" : "Ukrainian",
+    "uk" : "Ukranian",
+    "ur" : "Urdu",
+    "uz" : "Uzbek",
+    "vi" : "Vietnamese",
+    "zh" : "Chinese",
+    "zh-tw" : "Traditional Chinese (Taiwan)",
+}
+
+IANA_MAP = {
+    "ab" : 12026,
+    "af" : 40,
+    "ar" : 26020,
+    "az" : 26030,
+    "be" : 11890,
+    "bg" : 26050,
+    "bn" : 26040,
+    "bo" : 26601,
+    "br" : 1361,
+    "ca" : 3,
+    "ceb" : 26060,
+    "cs" : 26080,
+    "cy" : 26560,
+    "da" : 26090,
+    "de" : 26160,
+    "el" : 26165,
+    "en" : 26110,
+    "eo" : 11933,
+    "es" : 26460,
+    "et" : 26120,
+    "eu" : 1232,
+    "fa" : 26130,
+    "fi" : 26140,
+    "fo" : 11817,
+    "fr" : 26150,
+    "fy" : 1353,
+    "gd" : 65555,
+    "gl" : 1252,
+    "gu" : 26599,
+    "ha" : 26170,
+    "haw" : 26180,
+    "he" : 26592,
+    "hi" : 26190,
+    "hr" : 26070,
+    "hu" : 26200,
+    "hy" : 26597,
+    "id" : 26220,
+    "is" : 26210,
+    "it" : 26230,
+    "ja" : 26235,
+    "ka" : 26600,
+    "kk" : 26240,
+    "km" : 1222,
+    "ko" : 26255,
+    "ku" : 11815,
+    "ky" : 26260,
+    "la" : 26280,
+    "lt" : 26300,
+    "lv" : 26290,
+    "mg" : 1362,
+    "mk" : 26310,
+    "ml" : 26598,
+    "mn" : 26320,
+    "mr" : 1201,
+    "ms" : 1147,
+    "ne" : 26330,
+    "nl" : 26100,
+    "nn" : 172,
+    "no" : 26340,
+    "pa" : 65550,
+    "pl" : 26380,
+    "ps" : 26350,
+    "pt" : 26390,
+    "ro" : 26400,
+    "ru" : 26410,
+    "sa" : 1500,
+    "sh" : 1399,
+    "sk" : 26430,
+    "sl" : 26440,
+    "so" : 26450,
+    "sq" : 26010,
+    "sr" : 26420,
+    "sv" : 26480,
+    "sw" : 26470,
+    "ta" : 26595,
+    "te" : 26596,
+    "th" : 26594,
+    "tl" : 26490,
+    "tlh" : 26250,
+    "tn" : 65578,
+    "tr" : 26500,
+    "tw" : 1499,
+    "uk" : 26510,
+    "uk" : 26520,
+    "ur" : 26530,
+    "uz" : 26540,
+    "vi" : 26550,
+    "zh" : 26065,
+    "zh-tw" : 22,
+}
+
 
 def _load_models():
     modelsDir = os.path.join(os.path.dirname(__file__), 'trigrams')
@@ -81,6 +265,8 @@ def _load_models():
     lineRe = re.compile(r"(.{3})\s+(.*)")
     for modelFile in modelsList:
         modelPath = os.path.join(modelsDir, modelFile)
+        if os.path.isdir(modelPath):
+            continue
         f = codecs.open(modelPath, 'r', 'utf-8')
         model = {}  # QHash<QString,int> model
         for line in f:
@@ -88,12 +274,13 @@ def _load_models():
             if m:
                 model[m.group(1)] = int(m.group(2))
                 
-        models[modelFile] = model
+        models[modelFile.lower()] = model
 
 
 _load_models()
 
 def guessLanguage(text):
+    ''' Returns the language code, i.e. 'en' '''
     if not text:
         return UNKNOWN
     
@@ -103,6 +290,47 @@ def guessLanguage(text):
     text = normalize(text)
     
     return _identify(text, find_runs(text))
+
+
+def guessLanguageInfo(text):
+    """
+        Returns (tag, id, name)  i.e. ('en', 26110, 'english')
+    """
+    tag = guessLanguage(text)
+    
+    if tag == UNKNOWN:
+        return UNKNOWN,UNKNOWN,UNKNOWN
+
+    id = _getId(tag)
+    name = _getName(tag)
+    return tag,id,name
+
+
+# An alias for guessLanguage
+guessLanguageTag = guessLanguage
+
+
+def guessLanguageId(text):
+    """
+        Returns the language id.  i.e. 26110
+    """
+    lang = guessLanguage(text)
+    return _getId(lang)
+
+
+def guessLanguageName(text):
+    """
+        Returns the language name.  i.e. 'english'
+    """
+    lang = guessLanguage(text)
+    return _getName(lang) 
+
+
+def _getId(iana):
+    return IANA_MAP.get(iana, UNKNOWN)
+
+def _getName(iana):
+    return NAME_MAP.get(iana, UNKNOWN)
 
 
 def find_runs(text):
