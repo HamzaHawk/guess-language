@@ -351,7 +351,8 @@ def find_runs(text):
             run_types[block] += 1
             totalCount += 1
 
-#    pprint.pprint(run_types)
+    # import pprint
+    # pprint.pprint(run_types)
     
     # return run types that used for 40% or more of the string
     # always return basic latin if found more than 15%
@@ -380,7 +381,7 @@ def _identify(sample, scripts):
     if "Greek and Coptic" in scripts:
         return "el"
 
-    if "Katakana" in scripts or "Hiragana" in scripts or "Katakana Phonetic Extensions" in scripts:
+    if "Katakana" in scripts:
         return "ja"
 
     if "CJK Unified Ideographs" in scripts or "Bopomofo" in scripts \

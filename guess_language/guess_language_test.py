@@ -77,6 +77,9 @@ class guess_language_test(unittest.TestCase):
              ("հարաբերական",  "hy"), # armenian
              ("Hai vấn đề khó chịu với màn hình thường gặp nhất khi bạn dùng laptop là vết trầy xước và điểm chết. Sau đây là vài cách xử lý chú", "vi"),
              ("ii",  UNKNOWN),
+             
+             # This text has a mix of Hirigana, Katakana and CJK which requires the fix for issue:3 to classify correctly
+             ("トヨタ自動車、フィリピンの植林活動で第三者認証取得　トヨタ自動車(株)（以下、トヨタ）は、2007年９月よりフィリピンのルソン島北部に位置するカガヤン州ペニャブラン", 'ja'),
         ]
 
         for text, name in tests:
