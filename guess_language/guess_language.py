@@ -30,6 +30,8 @@
     
 '''
 
+__all__ = 'guessLanguage guessLanguageName guessLanguageInfo guessLanguageTag guessLanguageId'.split()
+
 import codecs, os, re, sys, unicodedata
 from collections import defaultdict
 from blocks import unicodeBlock
